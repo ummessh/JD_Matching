@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import pickle
 import os
+from sklearn.metrics.pairwise import cosine_similarity
 
 # Set page configuration
 st.set_page_config(
@@ -15,23 +16,17 @@ st.set_page_config(
 def load_resources():
     try:
         # Get the base path of the script
+        # The error log shows a specific nested path, so we will use that directly.
         base_path = os.path.dirname(os.path.abspath(__file__))
-
-        # Try to find the files assuming a nested structure
-        models_path = os.path.join(base_path, 'models')
-        data_path = os.path.join(base_path, 'data')
-
-        # Check if the nested path exists. If not, assume the files are at the root level.
-        if not os.path.exists(models_path):
-            models_path = os.path.join(base_path, 'jd-matching-project', 'jd-matching-project', 'models')
-            data_path = os.path.join(base_path, 'jd-matching-project', 'jd-matching-project', 'data')
+        models_path = os.path.join(base_path, 'jd-matching-project', 'jd-matching-project', 'models')
+        data_path = os.path.join(base_path, 'jd-matching-project', 'jd-matching-project', 'data')
 
         # Load the TfidfVectorizer
         tfidf_path = os.path.join(models_path, 'tfidf_vectorizer.pkl')
         with open(tfidf_path, 'rb') as f:
             tfidf_vectorizer = pickle.load(f)
             
-        # Load the similarity model
+        # Load the similarity model (cosine similarity is used here, but this is a placeholder)
         similarity_model_path = os.path.join(models_path, 'similarity_model.pkl')
         with open(similarity_model_path, 'rb') as f:
             similarity_model = pickle.load(f)
@@ -65,38 +60,41 @@ jd_input = st.text_area(
     placeholder="Paste the Job Description here..."
 )
 
-# Get the list of available candidate profiles
-candidate_profiles = job_descriptions['Job Title'].tolist()
-selected_candidate = st.selectbox(
-    "Select a candidate profile to use for demonstration:",
-    options=[''] + candidate_profiles
-)
-
 # Button to trigger the matching
 if st.button("Find Best Match", use_container_width=True):
     if not jd_input:
         st.warning("Please enter a Job Description.")
-    elif not selected_candidate:
-        st.warning("Please select a candidate profile.")
     else:
         with st.spinner("Finding the best match..."):
-            # Placeholder for actual matching logic
-            # In a real-world scenario, you would vectorize the jd_input and compare it
-            # with vectorized candidate profiles using the similarity model.
+            # Vectorize the input Job Description
+            jd_vector = tfidf_vectorizer.transform([jd_input])
 
-            # For this example, we'll just show the selected candidate as a placeholder result.
+            # Vectorize all candidate descriptions
+            candidate_vectors = tfidf_vectorizer.transform(job_descriptions['Description'])
+
+            # Calculate cosine similarity between the input JD and all candidates
+            # The 'similarity_model' is assumed to be a placeholder for this calculation
+            similarities = cosine_similarity(jd_vector, candidate_vectors).flatten()
+
+            # Find the index of the best match
+            best_match_index = np.argmax(similarities)
+            best_match_score = similarities[best_match_index] * 100 # Convert to percentage
+
+            # Get the details of the best matched candidate
+            best_match_details = job_descriptions.iloc[best_match_index]
+            best_match_title = best_match_details['Job Title']
+
             st.success("Match found!")
             
             st.markdown("---")
-            st.write(f"### Best Match Found: **{selected_candidate}**")
+            st.write(f"### Best Match Found: **{best_match_title}**")
+            st.info(f"Similarity Score: **{best_match_score:.2f}%**")
             
-            # Display the details of the selected candidate
-            candidate_details = job_descriptions[job_descriptions['Job Title'] == selected_candidate].iloc[0]
-            st.markdown(f"**Job Title:** {candidate_details['Job Title']}")
-            st.markdown(f"**Description:** {candidate_details['Description']}")
-            # In a real app, you would also display a similarity score
+            # Display the details of the best matched candidate
+            st.markdown(f"**Job Title:** {best_match_details['Job Title']}")
+            st.markdown(f"**Description:** {best_match_details['Description']}")
             st.markdown("---")
-            st.info("Note: This is a placeholder result. In the full application, the model would perform a similarity calculation to find the actual best match.")
+
 
 # --- File Upload Section (Optional for local testing) ---
 st.markdown("---")
