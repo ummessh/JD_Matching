@@ -1,1 +1,22 @@
+employee_id,name,current_jd
+1,Alice,Software Engineer with 5 years of experience in Python, Flask, and APIs
+2,Bob,Data Analyst skilled in SQL, PowerBI, Tableau, and Excel
+3,Charlie,Machine Learning Engineer with NLP and TensorFlow experience
+4,Diana,Backend Developer experienced in Java, Spring Boot, and REST APIs
+5,Eva,Cloud Engineer specialized in AWS, Docker, and Kubernetes
+6,Frank,Frontend Developer with expertise in React, HTML, CSS, and JavaScript
+7,Grace,DevOps Engineer skilled in CI/CD, Jenkins, and Kubernetes
+8,Henry,Data Scientist with knowledge of Python, Pandas, and Scikit-learn
+9,Ivy,Mobile Developer experienced in Flutter and Android SDK
+10,Jack,Cybersecurity Analyst with focus on network security and penetration testing
+11,Karen,HR Specialist experienced in talent acquisition and onboarding
+12,Leo,Marketing Manager skilled in digital campaigns, SEO, and analytics
+13,Mia,Finance Analyst with knowledge of budgeting, forecasting, and Excel models
+14,Nina,Product Manager experienced in Agile, Scrum, and stakeholder management
+15,Oscar,QA Engineer with skills in Selenium, PyTest, and test automation
+16,Paul,UI/UX Designer specialized in Figma, Adobe XD, and usability testing
+17,Quinn,Technical Writer skilled in API documentation and knowledge bases
+18,Rachel,Sales Manager with expertise in CRM systems and B2B sales
+19,Sam,Support Engineer experienced in troubleshooting and customer success
+20,Victor,Marketing Specialist skilled in SEO, SEM, and social media campaigns
 
