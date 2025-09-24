@@ -15,8 +15,13 @@ st.set_page_config(
 # Function to load the models and data
 def load_resources():
     try:
-        # Get the base path of the script, handling Streamlit's nested directory structure
-        base_path = os.path.dirname(os.path.abspath(__file__))
+        # A more robust way to handle the nested directory structure
+        # We will assume a known directory name and build the path from there.
+        # This prevents issues with abspath and repeated nesting.
+        base_path = os.getcwd()
+        if "jd-matching-project" in base_path:
+            base_path = base_path.split("jd-matching-project")[0]
+        
         models_path = os.path.join(base_path, 'jd-matching-project', 'jd-matching-project', 'models')
         data_path = os.path.join(base_path, 'jd-matching-project', 'jd-matching-project', 'JD')
 
