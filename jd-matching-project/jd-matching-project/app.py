@@ -14,10 +14,17 @@ st.set_page_config(
 # Function to load the models and data
 def load_resources():
     try:
-        # Construct the file paths relative to the script's location
-        base_path = os.path.dirname(__file__)
+        # Get the base path of the script
+        base_path = os.path.dirname(os.path.abspath(__file__))
+
+        # Try to find the files assuming a nested structure
         models_path = os.path.join(base_path, 'models')
         data_path = os.path.join(base_path, 'data')
+
+        # Check if the nested path exists. If not, assume the files are at the root level.
+        if not os.path.exists(models_path):
+            models_path = os.path.join(base_path, 'jd-matching-project', 'jd-matching-project', 'models')
+            data_path = os.path.join(base_path, 'jd-matching-project', 'jd-matching-project', 'data')
 
         # Load the TfidfVectorizer
         tfidf_path = os.path.join(models_path, 'tfidf_vectorizer.pkl')
