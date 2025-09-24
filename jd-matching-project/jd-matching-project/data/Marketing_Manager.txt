@@ -1,0 +1,14 @@
+You are an expert HR assistant. Write a professional Job Description for the role of Marketing Manager.
+
+Sections:
+1. Job Title
+2. Overview
+3. Key Responsibilities
+4. Required Skills
+5. Preferred Qualifications
+
+Experience required: {{ EXPERIENCE }}
+Candidate requirements:
+{{ REQUIREMENTS }}
+
+Focus on leadership, campaign management, digital marketing, and strategy.
