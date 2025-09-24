@@ -7,7 +7,7 @@ from src.matching import get_top_n_matches
 
 # Paths
 JD_FOLDER = "JD"  # <-- updated path
-EMPLOYEE_DB = "data/employees.csv"
+EMPLOYEE_DB = "Data/employees.csv"
 
 # Load employee database
 @st.cache_data
